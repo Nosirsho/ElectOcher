@@ -1,60 +1,36 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Оператор";
 }
 
-    <div class="container text-center mt-3">
-        <h1>Оператор</h1>    
-    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-        <div class="row alert-light text-center mt-3">
-            <div class="col-4">
-                <div class="row text-center mb-1">
-                    <div class="row">
-                        <h5 class="text-center">Вызов посетителей</h5>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-
-                            <button type="submit" class="btn btn-primary" id="callButton">Вызвать</button>
-                        </div>
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-primary" id="nextButton">Следующий</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-8">
-                <div class="row  alert-primary text-center">
-                    <div id="served" ><h2 class="text-center" id="servedNomer">Вызывается талон</h2></div>
-                </div>
-                <div class="row alert-dark">
-                    <div class="col-6 col-md-4">Талонов Выдано</div>
-                    <div class="col-6 col-md-4" id="t_wait">Ожидает: <b id="talonCount"></b></div>
-                    <div class="col-6 col-md-4">Обслужено</div>
-                </div>
-
-                </div>
+    <div class="container">
+        <div class="row justify-content-center mt-4">
+            <div id="call_talon" class="col-7 rounded-lg border border-primary mb-2 text-center">
+                <h1><b>ОПЕРАТОР</b></h1>
             </div>
 
-    </div>
-
-
-    <div class="text-center mt-5">
-        
-        <form>
-            
-            
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    
-
-                    
-                </div>
+            <div id="served" class="col-7 rounded-lg border border-primary mb-2 text-center" style="height: 300px; font-size: 50pt;">
+                <b>Вызван талон под номером</b><br><b id="servedNomer">1</b>
             </div>
-        </form>
 
-        <div id="notify"><p id="talonCount"></p></div>
-    </div>
+            <div class="row col-7">
+
+                <div class="col rounded-lg border border-primary ml-2">Клиентов: </div>
+                <div class="col rounded-lg border border-primary ml-2">Обслужено: </div>
+                <div id="t_wait" class="col rounded-lg border border-primary ml-2">Ожидают: <b id="talonCount"></b></div>
+
+            </div>
+
+            <div class="row col-7 mt-4">
+                <div class="col text-center"><button id="callButton" type="button" class="btn btn-primary" style="width: 200px">Вызов</button></div>
+
+                <div class="col text-center"><button id="nextButton" type="button" class="btn btn-success" style="width: 200px">Следующий</button></div>
+            </div>
+
+        </div>
+
+    </div>    
+
+
     
 
         <script src="js/signalr/dist/browser/signalr.min.js"></script>

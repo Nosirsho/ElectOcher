@@ -32,8 +32,8 @@ namespace ElectrOcher.Controllers
         {
             Talon talon=TalonQueue.PeekTalon();
             //Вызывается Талон в ИТ
-            await hubContext.Clients.AllExcept(connectionId).SendAsync("CallTalon", $"Выызывается талон № {talon.NomerPP}");
-            await hubContext.Clients.Client(connectionId).SendAsync("CallTalon", $"Выызывается талон № {talon.NomerPP}");
+            await hubContext.Clients.AllExcept(connectionId).SendAsync("CallTalon", talon.NomerPP);
+            await hubContext.Clients.Client(connectionId).SendAsync("CallTalon", talon.NomerPP);
             //await hubContext.Clients.AllExcept(connectionId).SendAsync("Notify", "Ваш Klient : ");
             // Количество активных Талонов
             //await hubContext.Clients.AllExcept(connectionId).SendAsync("TalonCount", $"Клиентов : {TalonQueue.GetTalonLength()}");
@@ -44,7 +44,7 @@ namespace ElectrOcher.Controllers
         {
             TalonQueue.DequeueTalon();
             // Количество активных Талонов
-            await hubContext.Clients.Client(connectionId).SendAsync("TalonCount", $"Клиентов : {TalonQueue.GetTalonLength()}");
+            await hubContext.Clients.Client(connectionId).SendAsync("TalonCount", TalonQueue.GetTalonLength().ToString());
 
 
 

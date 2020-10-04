@@ -1,15 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Регимтрация";
 }
 
 <div class="text-center mt-5">
     <a class="nav-link" href="/Operator" target="_blank">Оператор</a>
     <a class="nav-link" href="/Tablo" target="_blank">Информационное табло</a>
 
-    <div class="alert alert-dark" role="alert"></div>
-
     <form method="post" class="mt-3">
-        <input type="submit" class="btn btn-info" value="Получить талон" id="submitForm" data-toggle="modal" data-target=".bd-example-modal-sm"/>
+        <input type="submit" class="btn btn-info" value="ПОЛУЧИТЬ ТАЛОН" id="submitForm" data-toggle="modal" data-target=".bd-example-modal-sm" style="width:340px; height: 100px; font-size:30px; font-weight:bold"/>
     </form>
 </div>
 
@@ -17,8 +15,17 @@
 <!-- Small modal -->
 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
-        <div class="modal-content" id="notify">
+        <div class="modal-content text-center" id="notify">
+            <h5><b>ООО "Сотовая Компания"</b></h5>
+            <h6>г.Гафуров, ул.Комсомольская 16</h6>
+            <hr style="width:100%; text-align:center; border-width: 3px; margin:0">
+            <h6><b>ЖИВАЯ ОЧЕРЕДЬ</b></h6>
+            <h6>ПЕРЕД ВАМИ</h6>
+            <h6 id="talon_C"><b id="talonCount">?</b> человек(а)</h6>
+            <hr style="width:100%; text-align:center; border-width: 3px; margin:0">
             <h1 id="talon"></h1>
+            <hr style="width:100%; text-align:center; border-width: 3px; margin:0">
+            <h5>ОЖИДАЙТЕ ВЫЗОВА</h5>
         </div>
     </div>
 </div>
@@ -50,6 +57,15 @@
             // создает элемент <p> для сообщения пользователя
             let elem = document.getElementById("talon").textContent = message;
             document.getElementById("notify").appendChild(elem);
+
+        });
+
+        // получение сообщения количество неослуженных
+        hubConnection.on("TalonCount", function (message) {
+
+            // меняет сообщения
+            let elem = document.getElementById("talonCount").textContent = message-1;
+            document.getElementById("talon_C").appendChild(elem);
 
         });
 

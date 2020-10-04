@@ -1,16 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Информационное табло";
 }
+
     <div class="container">
-        <h1>Информационное табло</h1>
-        <div class="text-center mt-5 row">
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 rounded-lg border border-primary mb-4 text-center">
+                <h1><b>ИНФОРМАЦИОННОЕ ТАБЛО</b></h1>
+            </div>
 
+            <div id="CallTalonBlock" class="col-4 rounded-lg border border-primary mr-4 p-3 text-center" style="height: 300px; font-size: 30pt; background-color: #d8f4e7">
+                <b>Вызывается клиент с талоном</b> <br><b id="ColRow">1</b>
+            </div>
 
-            <div id="CallTalon2" class="alert-dark col-4"><h1 id="ColRow"></h1></div>
-            <div id="notify" class="alert-info col-8"></div>
+            <div id="talon_list" class="col-7 rounded-lg border border-primary mb-2 p-2 text-center" style="background-color: #d8f4e7">
+                <div id="talons" class="col-12 rounded-lg border border-primary mb-2 p-1 text-center" style="background-color: #f2e5c7"></div>
+            </div>
 
         </div>
+
     </div>
+
+
+
+    
 
 <script src="js/signalr/dist/browser/signalr.min.js"></script>
 <script>
@@ -19,22 +31,29 @@
         .build();
     let connectionId = "";
     
-    // получение сообщения от сервера
-    hubConnection.on("AddTalon", function (message) {
+    // Добавление талона в список очередей
+    hubConnection.on("AddTalon", function (message, id) {
 
-        // создает элемент <p> для сообщения пользователя
-        let elem = document.createElement("p");
-        elem.appendChild(document.createTextNode(message));
+        var divTalons = document.querySelector("div#talons");
+        var newDivTalons = divTalons.cloneNode(true);
+        newDivTalons.id = "talon" + id;
+        newDivTalons.appendChild(document.createTextNode(message));
 
-        document.getElementById("notify").appendChild(elem);
+        
+        document.getElementById("talon_list").appendChild(newDivTalons);
 
     });
+
     //Вызывается талон
     hubConnection.on("CallTalon", function (message) {
 
+        // Удаление элемента из списка талонов
+        document.getElementById("talon" + message).remove();
+
         // создает элемент <p> для сообщения пользователя
-        let elem = document.getElementById("ColRow").textContent = message;
-        document.getElementById("CallTalon2").appendChild(elem);
+        let elem = document.getElementById("ColRow").textContent =  message;
+        document.getElementById("CallTalonBlock").appendChild(elem);
+        
 
     });
     hubConnection.start();
