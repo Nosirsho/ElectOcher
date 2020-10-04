@@ -2,10 +2,60 @@
     ViewData["Title"] = "Home Page";
 }
 
+    <div class="container text-center mt-3">
+        <h1>Оператор</h1>    
+    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+        <div class="row alert-light text-center mt-3">
+            <div class="col-4">
+                <div class="row text-center mb-1">
+                    <div class="row">
+                        <h5 class="text-center">Вызов посетителей</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+
+                            <button type="submit" class="btn btn-primary" id="callButton">Вызвать</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary" id="nextButton">Следующий</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-8">
+                <div class="row  alert-primary text-center">
+                    <div id="served" ><h2 class="text-center" id="servedNomer">Вызывается талон</h2></div>
+                </div>
+                <div class="row alert-dark">
+                    <div class="col-6 col-md-4">Талонов Выдано</div>
+                    <div class="col-6 col-md-4" id="t_wait">Ожидает: <b id="talonCount"></b></div>
+                    <div class="col-6 col-md-4">Обслужено</div>
+                </div>
+
+                </div>
+            </div>
+
+    </div>
+
+
     <div class="text-center mt-5">
         
-        <div id="notify"></div>
+        <form>
+            
+            
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    
+
+                    
+                </div>
+            </div>
+        </form>
+
+        <div id="notify"><p id="talonCount"></p></div>
     </div>
+    
 
         <script src="js/signalr/dist/browser/signalr.min.js"></script>
         <script>
@@ -13,17 +63,58 @@
                 .withUrl("/chat")
                 .build();
             let connectionId = "";
-            
-            // получение сообщения от сервера
-            hubConnection.on("Notify", function (message) {
+            document.getElementById("nextButton")
+                .addEventListener("click", function (e) {
+                    e.preventDefault();
 
-                // создает элемент <p> для сообщения пользователя
-                let elem = document.createElement("p");
-                elem.appendChild(document.createTextNode(message));
+                    const data = new FormData();
+                    data.append("connectionId", connectionId);
 
-                document.getElementById("notify").appendChild(elem);
+                    fetch("operator/next", {
+                        method: "POST",
+                        body: data
+                    })
+                        .catch(error => console.error("Error: ", error));
+                });
+            //Вызов талона
+            document.getElementById("callButton")
+                .addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const data = new FormData();
+                    data.append("connectionId", connectionId);
+
+                    fetch("operator/call", {
+                        method: "POST",
+                        body: data
+                    })
+                        .catch(error => console.error("Error: ", error));
+                });
+
+            // получение сообщения количество неослуженных
+            hubConnection.on("TalonCount", function (message) {
+
+                // меняет сообщения
+                let elem = document.getElementById("talonCount").textContent = message;
+                document.getElementById("t_wait").appendChild(elem);
 
             });
-            hubConnection.start();
+
+            // получение: Обслуживается талон
+            hubConnection.on("CallTalon", function (message) {
+
+                // меняет сообщения
+                let elem = document.getElementById("servedNomer").textContent = message;
+                document.getElementById("served").appendChild(elem);
+
+            });
+
+
+            hubConnection.start().then(() => {
+                // после соединения получаем id подключения
+                console.log(hubConnection.connectionId);
+                connectionId = hubConnection.connectionId;
+            });
         </script>
+
 

@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+    <div class="container">
+        <h1>Информационное табло</h1>
+        <div class="text-center mt-5 row">
+
+
+            <div id="CallTalon2" class="alert-dark col-4"><h1 id="ColRow"></h1></div>
+            <div id="notify" class="alert-info col-8"></div>
+
+        </div>
+    </div>
+
+<script src="js/signalr/dist/browser/signalr.min.js"></script>
+<script>
+    const hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/chat")
+        .build();
+    let connectionId = "";
+    
+    // получение сообщения от сервера
+    hubConnection.on("AddTalon", function (message) {
+
+        // создает элемент <p> для сообщения пользователя
+        let elem = document.createElement("p");
+        elem.appendChild(document.createTextNode(message));
+
+        document.getElementById("notify").appendChild(elem);
+
+    });
+    //Вызывается талон
+    hubConnection.on("CallTalon", function (message) {
+
+        // создает элемент <p> для сообщения пользователя
+        let elem = document.getElementById("ColRow").textContent = message;
+        document.getElementById("CallTalon2").appendChild(elem);
+
+    });
+    hubConnection.start();
+
+</script>
+

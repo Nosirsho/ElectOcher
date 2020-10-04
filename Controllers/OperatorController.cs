@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using ElectrOcher.Models;
+using Microsoft.AspNetCore.SignalR;
 
-namespace ElectrOcher.Controllers {
-    public class OperatorController: Controller {
+namespace ElectrOcher.Controllers
+{
+    public class OperatorController : Controller
+    {
+        
+
+
         IHubContext<ChatHub> hubContext;
         public OperatorController(IHubContext<ChatHub> hubContext)
         {
@@ -15,9 +23,32 @@ namespace ElectrOcher.Controllers {
 
         public IActionResult Index()
         {
+            
             return View();
         }
-        
 
+        [HttpPost]
+        public async Task Call(string connectionId)
+        {
+            Talon talon=TalonQueue.PeekTalon();
+            //Вызывается Талон в ИТ
+            await hubContext.Clients.AllExcept(connectionId).SendAsync("CallTalon", $"Выызывается талон № {talon.NomerPP}");
+            await hubContext.Clients.Client(connectionId).SendAsync("CallTalon", $"Выызывается талон № {talon.NomerPP}");
+            //await hubContext.Clients.AllExcept(connectionId).SendAsync("Notify", "Ваш Klient : ");
+            // Количество активных Талонов
+            //await hubContext.Clients.AllExcept(connectionId).SendAsync("TalonCount", $"Клиентов : {TalonQueue.GetTalonLength()}");
+        }
+
+        [HttpPost]
+        public async Task Next(string connectionId)
+        {
+            TalonQueue.DequeueTalon();
+            // Количество активных Талонов
+            await hubContext.Clients.Client(connectionId).SendAsync("TalonCount", $"Клиентов : {TalonQueue.GetTalonLength()}");
+
+
+
+        }
     }
 }
+

@@ -2,49 +2,62 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="text-center mt-5">
-        <a class="nav-link" href="/Operator">Электромобили</a>
-        <form method="post">
-            <input type="submit" value="Отправить" id="submitForm" />
-        </form>
+<div class="text-center mt-5">
+    <a class="nav-link" href="/Operator" target="_blank">Оператор</a>
+    <a class="nav-link" href="/Tablo" target="_blank">Информационное табло</a>
 
-        <div id="notify"></div>
+    <div class="alert alert-dark" role="alert"></div>
 
+    <form method="post" class="mt-3">
+        <input type="submit" class="btn btn-info" value="Получить талон" id="submitForm" data-toggle="modal" data-target=".bd-example-modal-sm"/>
+    </form>
+</div>
+
+
+<!-- Small modal -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id="notify">
+            <h1 id="talon"></h1>
+        </div>
     </div>
+</div>
 
-        <script src="js/signalr/dist/browser/signalr.min.js"></script>
-        <script>
-            const hubConnection = new signalR.HubConnectionBuilder()
-                .withUrl("/chat")
-                .build();
-            let connectionId = "";
-            document.getElementById("submitForm")
-                .addEventListener("click", function (e) {
-                    e.preventDefault();
 
-                    const data = new FormData();
-                    data.append("connectionId", connectionId);
+    <script src="js/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chat")
+            .build();
+        let connectionId = "";
+        document.getElementById("submitForm")
+            .addEventListener("click", function (e) {
+                e.preventDefault();
 
-                    fetch("home/create", {
-                        method: "POST",
-                        body: data
-                    })
-                        .catch(error => console.error("Error: ", error));
-                });
-            // получение сообщения от сервера
-            hubConnection.on("Notify", function (message) {
+                const data = new FormData();
+                data.append("connectionId", connectionId);
 
-                // создает элемент <p> для сообщения пользователя
-                let elem = document.createElement("p");
-                elem.appendChild(document.createTextNode(message));
-
-                document.getElementById("notify").appendChild(elem);
+                fetch("home/create", {
+                    method: "POST",
+                    body: data
+                })
+                    .catch(error => console.error("Error: ", error));
 
             });
-            hubConnection.start().then(() => {
-                // после соединения получаем id подключения
-                console.log(hubConnection.connectionId);
-                connectionId = hubConnection.connectionId;
-            });
-        </script>
+        // получение сообщения от сервера
+        hubConnection.on("Notify", function (message) {
+
+            // создает элемент <p> для сообщения пользователя
+            let elem = document.getElementById("talon").textContent = message;
+            document.getElementById("notify").appendChild(elem);
+
+        });
+
+
+        hubConnection.start().then(() => {
+            // после соединения получаем id подключения
+            console.log(hubConnection.connectionId);
+            connectionId = hubConnection.connectionId;
+        });
+    </script>
 

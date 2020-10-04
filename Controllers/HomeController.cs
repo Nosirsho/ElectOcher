@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace ElectrOcher.Controllers {
     public class HomeController : Controller {
         public static int nomerTalon = 0;
-        public List<Talon> talons = new List<Talon>();
+        
 
        
         IHubContext<ChatHub> hubContext;
@@ -29,11 +29,14 @@ namespace ElectrOcher.Controllers {
         {
             nomerTalon++;
             Talon talon = new Talon {  NomerPP=nomerTalon.ToString(), AcceptFlag = false, TalonTime =DateTime.Now.ToLocalTime()  };
-            
-            talons.Add(talon);
 
-            await hubContext.Clients.AllExcept(connectionId).SendAsync("Notify", $"Талон № : {talon.NomerPP} Время регистрации: {talon.TalonTime} Статус: {talon.AcceptFlag}");
+            TalonQueue.EnqueueTalon(talon);
+            //Отправка талона на ИТ 
+            await hubContext.Clients.AllExcept(connectionId).SendAsync("AddTalon", $"Талон № : {talon.NomerPP} Время регистрации: {talon.TalonTime} Статус: {talon.AcceptFlag}");
+            //Получение талона
             await hubContext.Clients.Client(connectionId).SendAsync("Notify", $"Ваш Талон : " + nomerTalon);
+            // Количество активных Талонов Оператор
+            await hubContext.Clients.AllExcept(connectionId).SendAsync("TalonCount", $"Клиентов : {TalonQueue.GetTalonLength()}"  );
         }
     }
 }
