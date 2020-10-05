@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcher\\ElectrOcher.csproj": {}
+    "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj": {}
   },
   "projects": {
-    "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcher\\ElectrOcher.csproj": {
+    "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcher\\ElectrOcher.csproj",
+        "projectUniqueName": "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj",
         "projectName": "ElectrOcher",
-        "projectPath": "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcher\\ElectrOcher.csproj",
-        "packagesPath": "C:\\Users\\KholmamadovN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcher\\obj\\",
+        "projectPath": "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj",
+        "packagesPath": "C:\\Users\\Nosirsho\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\KholmamadovN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nosirsho\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

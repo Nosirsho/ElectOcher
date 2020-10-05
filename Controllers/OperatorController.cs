@@ -41,13 +41,20 @@ namespace ElectrOcher.Controllers
         public async Task Next(string connectionId)
         {
 
+            Talon acceptTalon= TalonQueue.DequeueTalon();
+            acceptTalon.AcceptFlag = true;
+            acceptTalon.AcceptTime = DateTime.Now.ToLocalTime();
+            
+            TalonServ.talonList.Add(acceptTalon);
+            
+            
+            int tWait = TalonQueue.GetTalonLength();
+            int tAccept = TalonServ.talonList.Count;
+            int tAll = tWait + tAccept;
 
-            TalonQueue.DequeueTalon();
             // Количество активных Талонов
-            await hubContext.Clients.Client(connectionId).SendAsync("TalonCount", TalonQueue.GetTalonLength().ToString());
+            await hubContext.Clients.Client(connectionId).SendAsync("TalonCount", tWait.ToString(), tAccept.ToString(),tAll.ToString());
             await hubContext.Clients.AllExcept(connectionId).SendAsync("TalonCount", TalonQueue.GetTalonLength().ToString());
-
-
         }
     }
 }

@@ -13,16 +13,16 @@ namespace ElectrOcher.Models
             talonsList.Enqueue(talon);
         }
 
-        public static void DequeueTalon() {
-            talonsList.Dequeue();
+        public static Talon  DequeueTalon() {
+            return talonsList.Dequeue();
         }
 
         public static Talon PeekTalon() {
             return talonsList.Peek();
         }
 
-        public static string GetTalonLength() {
-            return talonsList.Count().ToString();
+        public static int GetTalonLength() {
+            return talonsList.Count();
         }
     }
 }

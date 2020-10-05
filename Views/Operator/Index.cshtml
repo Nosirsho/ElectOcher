@@ -14,9 +14,9 @@
 
             <div class="row col-7">
 
-                <div class="col rounded-lg border border-primary ml-2">Клиентов: </div>
-                <div class="col rounded-lg border border-primary ml-2">Обслужено: </div>
-                <div id="t_wait" class="col rounded-lg border border-primary ml-2">Ожидают: <b id="talonCount"></b></div>
+                <div id="t_all" class="col rounded-lg border border-primary ml-2">Талонов выдано: <b id="t_all_count"></b></div>
+                <div id="t_accpet" class="col rounded-lg border border-primary ml-2">Обслужено: <b id="t_accept_count"></b></div>
+                <div id="t_wait" class="col rounded-lg border border-primary ml-2">Ожидают: <b id="t_wait_count"></b></div>
 
             </div>
 
@@ -72,9 +72,9 @@
                 });
 
             // получение сообщения количество необслуженных
-            hubConnection.on("TalonCount", function (message) {
+            hubConnection.on("TalonCount", function (tWait, tAccept, tAll) {
 
-                if (message != 0) {
+                if (tWait != 0) {
                     document.getElementById("callButton").disabled = false;
                 } 
                 else {
@@ -85,11 +85,13 @@
                 }
 
                 // меняет сообщения
-                let elem = document.getElementById("talonCount").textContent = message;
-                document.getElementById("t_wait").appendChild(elem);
-                
-
-
+                document.getElementById("t_wait_count").innerText = tWait;
+                //document.getElementById("t_wait").appendChild(elem1);
+                document.getElementById("t_all_count").innerText = tAll;
+                //document.getElementById("t_all").raplaceChild(elem2);
+                document.getElementById("t_accept_count").innerText = tAccept;
+                //document.getElementById("t_accept").appendChild(elem3);
+               
             });
 
             // получение: Обслуживается талон

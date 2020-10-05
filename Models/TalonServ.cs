@@ -4,10 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace ElectrOcher.Models {
-    public class TalonServ {
-        public int Id { get; set; }
-
-        public Talon TaloId { get; set; }
-
+    public static class TalonServ {
+        public static List<Talon> talonList = new List<Talon>();
     }
 }

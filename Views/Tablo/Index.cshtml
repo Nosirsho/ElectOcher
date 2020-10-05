@@ -60,10 +60,8 @@
     // Количество необслуженных клинтов
     hubConnection.on("TalonCount", function (message) {
 
-        if (message == 0) {
             document.getElementById("callText").innerText = "Ожидайте вызова оператора"
-            document.getElementById("ColRow").innerText = ""
-        }
+            document.getElementById("ColRow").innerText = "" 
 
     });
 
