@@ -34,18 +34,18 @@ namespace ElectrOcher.Controllers
             //Вызывается Талон в ИТ
             await hubContext.Clients.AllExcept(connectionId).SendAsync("CallTalon", talon.NomerPP);
             await hubContext.Clients.Client(connectionId).SendAsync("CallTalon", talon.NomerPP);
-            //await hubContext.Clients.AllExcept(connectionId).SendAsync("Notify", "Ваш Klient : ");
-            // Количество активных Талонов
-            //await hubContext.Clients.AllExcept(connectionId).SendAsync("TalonCount", $"Клиентов : {TalonQueue.GetTalonLength()}");
+            
         }
 
         [HttpPost]
         public async Task Next(string connectionId)
         {
+
+
             TalonQueue.DequeueTalon();
             // Количество активных Талонов
             await hubContext.Clients.Client(connectionId).SendAsync("TalonCount", TalonQueue.GetTalonLength().ToString());
-
+            await hubContext.Clients.AllExcept(connectionId).SendAsync("TalonCount", TalonQueue.GetTalonLength().ToString());
 
 
         }

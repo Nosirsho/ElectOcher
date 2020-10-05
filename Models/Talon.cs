@@ -11,5 +11,6 @@ namespace ElectrOcher.Models {
         public DateTime TalonTime { get; set; }
         public DateTime AcceptTime { get; set; }
         public bool AcceptFlag { get; set; }
+        public string Operator { get; set; }
     }
 }

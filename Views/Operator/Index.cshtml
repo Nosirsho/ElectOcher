@@ -9,7 +9,7 @@
             </div>
 
             <div id="served" class="col-7 rounded-lg border border-primary mb-2 text-center" style="height: 300px; font-size: 50pt;">
-                <b>Вызван талон под номером</b><br><b id="servedNomer">1</b>
+                <b id="servedText"></b><br><b id="servedNomer"></b>
             </div>
 
             <div class="row col-7">
@@ -23,7 +23,7 @@
             <div class="row col-7 mt-4">
                 <div class="col text-center"><button id="callButton" type="button" class="btn btn-primary" style="width: 200px">Вызов</button></div>
 
-                <div class="col text-center"><button id="nextButton" type="button" class="btn btn-success" style="width: 200px">Следующий</button></div>
+                <div class="col text-center"><button id="nextButton" type="button" class="btn btn-success" style="width: 200px">Обслужен</button></div>
             </div>
 
         </div>
@@ -42,6 +42,7 @@
             document.getElementById("nextButton")
                 .addEventListener("click", function (e) {
                     e.preventDefault();
+                    document.getElementById("nextButton").disabled = true;
 
                     const data = new FormData();
                     data.append("connectionId", connectionId);
@@ -57,6 +58,9 @@
                 .addEventListener("click", function (e) {
                     e.preventDefault();
 
+                    document.getElementById("nextButton").disabled = false;
+
+                    document.getElementById("servedText").innerText = "Вызван клиент с талоном"
                     const data = new FormData();
                     data.append("connectionId", connectionId);
 
@@ -67,12 +71,24 @@
                         .catch(error => console.error("Error: ", error));
                 });
 
-            // получение сообщения количество неослуженных
+            // получение сообщения количество необслуженных
             hubConnection.on("TalonCount", function (message) {
+
+                if (message != 0) {
+                    document.getElementById("callButton").disabled = false;
+                } 
+                else {
+                    document.getElementById("callButton").disabled = true;
+                    
+                    document.getElementById("servedText").innerText=""
+                    document.getElementById("servedNomer").innerText = ""
+                }
 
                 // меняет сообщения
                 let elem = document.getElementById("talonCount").textContent = message;
                 document.getElementById("t_wait").appendChild(elem);
+                
+
 
             });
 

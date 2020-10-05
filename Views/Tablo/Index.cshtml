@@ -9,7 +9,7 @@
             </div>
 
             <div id="CallTalonBlock" class="col-4 rounded-lg border border-primary mr-4 p-3 text-center" style="height: 300px; font-size: 30pt; background-color: #d8f4e7">
-                <b>Вызывается клиент с талоном</b> <br><b id="ColRow">1</b>
+                <b id="callText"></b> <br><b id="ColRow"></b>
             </div>
 
             <div id="talon_list" class="col-7 rounded-lg border border-primary mb-2 p-2 text-center" style="background-color: #d8f4e7">
@@ -51,11 +51,24 @@
         document.getElementById("talon" + message).remove();
 
         // создает элемент <p> для сообщения пользователя
+        document.getElementById("callText").innerText = "Вызывается клиент с талоном"
         let elem = document.getElementById("ColRow").textContent =  message;
         document.getElementById("CallTalonBlock").appendChild(elem);
-        
 
     });
+
+    // Количество необслуженных клинтов
+    hubConnection.on("TalonCount", function (message) {
+
+        if (message == 0) {
+            document.getElementById("callText").innerText = "Ожидайте вызова оператора"
+            document.getElementById("ColRow").innerText = ""
+        }
+
+    });
+
+
+
     hubConnection.start();
 
 </script>
