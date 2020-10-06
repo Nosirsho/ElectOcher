@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ElectrOcher.Models.Talon>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Список обслуженных клиентов</h1>
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                Номер талона
+            </th>
+            <th>
+                Время регистрации
+            </th>
+            <th>
+                Время завершение обслуживания
+            </th>
+            <th>
+                Обслужено за:<br> (hh:mm:ss)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomerPP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TalonTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcceptTime)
+                </td>
+                <td>
+                    @{
+                        string raznica = item.getServiceTime().Hours + ":" + item.getServiceTime().Minutes + ":" + item.getServiceTime().Seconds;
+                    }
+                    @Html.DisplayFor(modelItem => raznica)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

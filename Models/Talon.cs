@@ -11,5 +11,11 @@ namespace ElectrOcher.Models {
         public DateTime TalonTime { get; set; }
         public DateTime AcceptTime { get; set; }
         public bool AcceptFlag { get; set; }
+
+        public TimeSpan getServiceTime() {
+            System.TimeSpan diff1 = AcceptTime.Subtract(TalonTime);
+
+            return diff1;
+        }
     }
 }

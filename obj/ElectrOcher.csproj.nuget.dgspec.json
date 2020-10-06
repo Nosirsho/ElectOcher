@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj": {}
+    "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcherNew\\ElectOcher\\ElectrOcher.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj": {
+    "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcherNew\\ElectOcher\\ElectrOcher.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj",
+        "projectUniqueName": "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcherNew\\ElectOcher\\ElectrOcher.csproj",
         "projectName": "ElectrOcher",
-        "projectPath": "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\ElectrOcher.csproj",
-        "packagesPath": "C:\\Users\\Nosirsho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nosirsho\\source\\repos\\ElectOcher\\obj\\",
+        "projectPath": "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcherNew\\ElectOcher\\ElectrOcher.csproj",
+        "packagesPath": "C:\\Users\\KholmamadovN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KholmamadovN\\source\\repos\\ElectOcherNew\\ElectOcher\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Nosirsho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\KholmamadovN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -37,6 +37,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
