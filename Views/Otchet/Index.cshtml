@@ -3,28 +3,35 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<div class="form-inline">
+    <a class="nav-link" href="/Operator" target="_blank">Оператор</a>
+    <a class="nav-link" href="/Home" target="_blank">Регистрация</a>
+    <a class="nav-link" href="/Tablo" target="_blank">Информационное табло</a>
+</div>
 <h1>Список обслуженных клиентов</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" action="~/Otchet/Index">
+
+<div class="row text-center mb-2 ">
+    <form method="post" action="~/Otchet/Index">
 
 
-            <div class="form-group">
-                <input id="datetime" type="datetime-local" name="sDate">
-            </div>
+        <div class="form-check-inline ml-2">
+            <label for="sDate" class="control-label mb-2 mr-2">C  </label>
+            <input id="datetime" type="datetime-local" name="sDate">
+        </div>
 
-            <div class="form-group">
-                <input id="datetime" type="datetime-local" name="eDate">
-            </div>
+        <div class="form-check-inline">
+            <label for="eDate" class="control-label mb-2 mr-2">По </label>
+            <input id="datetime" type="datetime-local" name="eDate">
+        </div>
 
 
-            <div class="form-group">
-                <input type="submit" value="Отчет" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+        <div class="form-check-inline">
+            <input type="submit" value="Отчет" class="btn btn-primary" />
+        </div>
+
+    </form>
+
 </div>
 
 

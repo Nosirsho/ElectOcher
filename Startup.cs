@@ -45,7 +45,7 @@ namespace ElectrOcher {
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Otchet}/{action=Index}/{id?}");
                 endpoints.MapHub<ChatHub>("/chat");
             });
         }
